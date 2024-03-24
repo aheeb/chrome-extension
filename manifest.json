@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "My Sidebar Extension",
+  "version": "1.0",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "contextMenus"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["sidebar.js", "content_script.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["sidebar.html", "sidebar-script.js"],
+      "matches": ["<all_urls>"]
+
+    }
+  ],
+  "commands": {
+    "_execute_sidebar_action": {
+      "suggested_key": {
+        "default": "Ctrl+P",
+        "mac": "Command+P"
+      },
+      "description": "Toggle Sidebar"
+    }
+  }
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sidebar</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      
+    }
+
+    #chat-container {
+      height: 400px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .message {
+      margin-bottom: 10px;
+    }
+
+    .user {
+      text-align: right;
+    }
+
+    .assistant {
+      text-align: left;
+    }
+
+    input[type="text"] {
+      width: 80%;
+      padding: 5px;
+    }
+
+    button {
+      padding: 5px 10px;
+    }
+    #clear-button {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+    <div id="chat-container">
+        <!-- Chat messages will be displayed here -->
+      </div>
+      <input type="text" id="user-input" placeholder="Type your message...">
+      <button id="send-button">Send</button>
+      <button id="clear-button">Clear History</button>
+      <!-- Inside sidebar.html -->
+<select id="model-selector">
+    <option value="gpt-4-0125-preview">Best GPT 4 Version</option>
+    <option value="gpt-3.5-turbo-0125">Best GPT 3 Version</option>
+    <option value="gpt-4">Cheap GPT 4</option>
+    <option value="gpt-3.5-turbo-1106">Cheap GPT 3</option>
+  </select>
+<input type="file" id="pdf-upload" accept="application/pdf">
+
+<script src="config.js"></script>
+<!-- In sidebar.html -->
+<label>
+    <input type="checkbox" id="use-webpage-context">
+    Use current webpage as context
+  </label>
+  
+      <script src="sidebar-script.js"></script>
+</body>
+</html>
