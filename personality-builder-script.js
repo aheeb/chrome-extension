@@ -45,7 +45,7 @@ document.getElementById('build-personality').addEventListener('click', function 
     // Combine arrays or process them as needed
     let personalityProfile = [...selectedProfessions, ...selectedTraits];
     let prompt = 'make a new personality profile with the following traits: ' + personalityProfile.join(', ');
-    let key = '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'
+    let key = window._env_.API_KEY;
     conversationHistory.push({ role: 'user', content: prompt });
     fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
