@@ -11,12 +11,13 @@
   "permissions": [
     "activeTab",
     "scripting",
-    "contextMenus"
+    "contextMenus",
+    "storage"
   ],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["sidebar.js", "content_script.js"]
+      "js": ["sidebar.js", "content_script.js", "personality-builder-script.js"]
     }
   ],
   "web_accessible_resources": [

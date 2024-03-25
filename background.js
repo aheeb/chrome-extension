@@ -20,6 +20,12 @@ function toggleSidebar(tab) {
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.type === 'textSelected' && sidebarTabId !== null) {
-        chrome.tabs.sendMessage(sidebarTabId, request);
+        chrome.tabs.sendMessage(sidebarTabId, request, function (response) {
+            if (chrome.runtime.lastError) {
+                // Handle error, for example, logging or retrying
+                console.error('Message sending failed:', chrome.runtime.lastError.message);
+            }
+        });
     }
 });
+

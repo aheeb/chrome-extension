@@ -16,8 +16,26 @@ function createSidebar() {
     document.body.appendChild(sidebarIframe);
 
     sidebarIframe.onload = () => {
+        // Notify the iframe that it has been loaded
+        sidebarIframe.contentWindow.postMessage({ type: 'iframeLoaded' }, '*');
+
+        // Send any other necessary messages, like loading conversation history
         sidebarIframe.contentWindow.postMessage({ type: 'loadHistory', history: conversationHistory }, '*');
     };
+
+    document.body.appendChild(sidebarIframe);
+
+}
+
+function handleInternalLinks(iframe) {
+    const links = iframe.contentDocument.querySelectorAll('a');
+    links.forEach(link => {
+        link.addEventListener('click', function (event) {
+            event.preventDefault();
+            const target = event.target.getAttribute('href');
+            iframe.src = chrome.runtime.getURL(target);
+        });
+    });
 }
 
 function toggleSidebar() {
@@ -50,16 +68,17 @@ window.addEventListener('message', (event) => {
         const message = event.data;
         if (message.type === 'userMessage') {
             const selectedModel = message.model;
+            const key = message.API_KEY;
             const userMessage = message.text;
+            console.log(selectedModel);
             conversationHistory.push({ role: 'user', content: userMessage });
-
-            const key = window._env_.API_KEY;
+            console.log(conversationHistory);
             // Send the conversation history to the AI API and receive the response
             fetch('https://api.openai.com/v1/chat/completions', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + key,
+                    'Authorization': `Bearer ${key}`,
                 },
                 body: JSON.stringify({
                     "model": selectedModel,
