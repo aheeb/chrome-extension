@@ -16,6 +16,12 @@ function createSidebar() {
     document.body.appendChild(sidebarIframe);
 
     sidebarIframe.onload = () => {
+        chrome.storage.local.get('conversationHistory', function (data) {
+            if (data.conversationHistory) {
+                conversationHistory = data.conversationHistory;
+                sidebarIframe.contentWindow.postMessage({ type: 'loadHistory', history: conversationHistory }, '*');
+            }
+        });
         // Notify the iframe that it has been loaded
         sidebarIframe.contentWindow.postMessage({ type: 'iframeLoaded' }, '*');
 
@@ -91,6 +97,7 @@ window.addEventListener('message', (event) => {
                     console.log('Success:', data);
                     const assistantMessage = data.choices[0].message.content.trim();
                     conversationHistory.push({ role: 'assistant', content: assistantMessage });
+                    chrome.storage.local.set({ 'conversationHistory': conversationHistory });
                     sidebarIframe.contentWindow.postMessage({ type: 'assistantMessage', text: assistantMessage }, '*');
                 })
                 .catch(error => {

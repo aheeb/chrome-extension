@@ -159,6 +159,16 @@ input[type="file"] + label:hover {
   </select>
   <input type="file" id="pdf-upload" accept="application/pdf" hidden>
   <label for="pdf-upload">Choose a PDF</label>
+
+<!-- Option to select a file from cloud storage -->
+<button id="cloud-storage-button">Select from Cloud Storage</button>
+
+
+<select id="cloud-files-select">
+    <option value="">Select a file...</option>
+    <!-- Options will be added dynamically here -->
+</select>
+
   
 
 <script src="config.js"></script>
@@ -167,6 +177,9 @@ input[type="file"] + label:hover {
     <input type="checkbox" id="use-webpage-context">
     Use current webpage as context
   </label>
+  <select id="personalities-select"></select>
+
+
 
   <!-- Add this inside sidebar.html -->
 <a href="personality-builder.html" id="open-personality-builder">Personality Builder</a>
